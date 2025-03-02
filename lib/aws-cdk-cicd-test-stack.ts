@@ -32,7 +32,7 @@ export class AwsCdkCicdTestStack extends cdk.Stack {
 
     pipeline.addStage(
       new MyPipelineAppStage(this, 'test2', {
-        env: { account: '585008082334', region: 'us-east-2' },
+        env: { account: '585008082334', region: 'us-west-2' },
       })
     );
   }
