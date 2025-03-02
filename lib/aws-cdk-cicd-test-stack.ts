@@ -2,9 +2,11 @@ import * as cdk from 'aws-cdk-lib';
 import {
   CodePipeline,
   CodePipelineSource,
+  ManualApprovalStep,
   ShellStep,
 } from 'aws-cdk-lib/pipelines';
 import { Construct } from 'constructs';
+import { MyPipelineAppStage } from './my-cdk-stage';
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
 export class AwsCdkCicdTestStack extends cdk.Stack {
@@ -20,5 +22,24 @@ export class AwsCdkCicdTestStack extends cdk.Stack {
         commands: ['npm ci', 'npm run build', 'npx cdk synth'],
       }),
     });
+
+    const testingStage = pipeline.addStage(
+      new MyPipelineAppStage(this, 'test', {
+        env: { account: '585008082334', region: 'us-east-1' },
+      })
+    );
+    testingStage.addPost(new ManualApprovalStep('my-manual-approval-step'));
+
+    const myWave = pipeline.addWave('my-wave');
+    myWave.addStage(
+      new MyPipelineAppStage(this, 'mystage2', {
+        env: { account: '585008082334', region: 'us-east-2' },
+      })
+    );
+    myWave.addStage(
+      new MyPipelineAppStage(this, 'mystage3', {
+        env: { account: '585008082334', region: 'us-west-1' },
+      })
+    );
   }
 }
