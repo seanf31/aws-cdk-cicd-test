@@ -35,17 +35,5 @@ export class AwsCdkCicdTestStack extends cdk.Stack {
         env: { account: '585008082334', region: 'us-east-2' },
       })
     );
-
-    // const myWave = pipeline.addWave('my-wave');
-    // myWave.addStage(
-    //   new MyPipelineAppStage(this, 'mystage2', {
-    //     env: { account: '585008082334', region: 'us-east-2' },
-    //   })
-    // );
-    // myWave.addStage(
-    //   new MyPipelineAppStage(this, 'mystage3', {
-    //     env: { account: '585008082334', region: 'us-west-1' },
-    //   })
-    // );
   }
 }
