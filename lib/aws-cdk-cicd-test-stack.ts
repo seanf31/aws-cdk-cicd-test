@@ -30,16 +30,22 @@ export class AwsCdkCicdTestStack extends cdk.Stack {
     );
     testingStage.addPost(new ManualApprovalStep('my-manual-approval-step'));
 
-    const myWave = pipeline.addWave('my-wave');
-    myWave.addStage(
-      new MyPipelineAppStage(this, 'mystage2', {
+    pipeline.addStage(
+      new MyPipelineAppStage(this, 'test2', {
         env: { account: '585008082334', region: 'us-east-2' },
       })
     );
-    myWave.addStage(
-      new MyPipelineAppStage(this, 'mystage3', {
-        env: { account: '585008082334', region: 'us-west-1' },
-      })
-    );
+
+    // const myWave = pipeline.addWave('my-wave');
+    // myWave.addStage(
+    //   new MyPipelineAppStage(this, 'mystage2', {
+    //     env: { account: '585008082334', region: 'us-east-2' },
+    //   })
+    // );
+    // myWave.addStage(
+    //   new MyPipelineAppStage(this, 'mystage3', {
+    //     env: { account: '585008082334', region: 'us-west-1' },
+    //   })
+    // );
   }
 }
